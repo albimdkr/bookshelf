@@ -1,5 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 const Hapi = require('@hapi/hapi');
+// eslint-disable-next-line no-unused-vars
+const routes = require('./routes');
 
 const init = async () => {
   const server = Hapi.server({
