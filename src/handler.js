@@ -4,7 +4,18 @@ const { nanoid } = require('nanoid');
 const books = require('./books');
 
 const addBookHandler = (request, h) => {
-  const { title, tags, body } = request.payload;
+  // eslint-disable-next-line max-len
+  const {
+    name,
+    year,
+    author,
+    summary,
+    publisher,
+    pageCount,
+    readingPage,
+    finished,
+    reading,
+  } = request.payload;
 
   const id = nanoid(16);
   const insertedAt = new Date().toISOString();
