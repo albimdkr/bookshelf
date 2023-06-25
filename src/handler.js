@@ -13,14 +13,15 @@ const addBookHandler = (request, h) => {
     summary,
     publisher,
     pageCount,
-    readingPage,
+    readPage,
     reading,
   } = request.payload;
 
   const id = nanoid(16);
-  const finished = pageCount;
+  const finished = pageCount === readPage;
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
+
   const newBook = {
     name,
     year,
@@ -28,13 +29,14 @@ const addBookHandler = (request, h) => {
     summary,
     publisher,
     pageCount,
-    readingPage,
-    finished,
+    readPage,
     reading,
+    finished,
     id,
     insertedAt,
     updatedAt,
   };
+
   books.push(newBook);
 
   const isSuccess = books.filter((book) => book.id === id).length > 0;
@@ -65,4 +67,4 @@ const getAllBooksHandler = () => ({
   },
 });
 
-module.exports = { addBookHandler };
+module.exports = { addBookHandler, getAllBooksHandler };
