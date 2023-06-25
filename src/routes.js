@@ -21,8 +21,8 @@ const routes = [
   // get book with spesifik id
   {
     method: 'GET',
-    path: '/books/{bookId}',
-    handler: () => {},
+    path: '/books/{id}',
+    handler: getBookByIdHandler,
   },
 ];
 module.exports = routes;
