@@ -21,6 +21,14 @@ const addBookHandler = (request, h) => {
   const finished = pageCount === readPage;
   const insertedAt = new Date().toISOString();
   const updatedAt = insertedAt;
+  if (!name) {
+    const response = h.response({
+      status: 'fail',
+      message: 'Gagal menambahkan buku. Mohon isi nama buku',
+    });
+    response.code(400);
+    return response;
+  }
 
   const newBook = {
     name,
@@ -51,13 +59,6 @@ const addBookHandler = (request, h) => {
     response.code(201);
     return response;
   }
-
-  const response = h.response({
-    status: 'fail',
-    message: 'Gagal menambahkan buku. Mohon isi nama buku',
-  });
-  response.code(400);
-  return response;
 };
 
 const getAllBooksHandler = () => ({
