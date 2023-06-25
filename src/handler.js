@@ -4,6 +4,7 @@
 const { nanoid } = require('nanoid');
 const books = require('./books');
 
+// 1. addBook
 const addBookHandler = (request, h) => {
   // eslint-disable-next-line max-len
   const {
@@ -61,7 +62,7 @@ const addBookHandler = (request, h) => {
       status: 'success',
       message: 'Buku berhasil ditambahkan!',
       data: {
-        bookid: id,
+        bookId: id,
       },
     });
     response.code(201);
@@ -69,11 +70,14 @@ const addBookHandler = (request, h) => {
   }
 };
 
+// 2. getAllBook
 const getAllBooksHandler = () => ({
   status: 'success',
   data: {
     books,
   },
 });
+
+// 3. getBookById
 
 module.exports = { addBookHandler, getAllBooksHandler };
