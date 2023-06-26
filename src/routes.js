@@ -32,11 +32,11 @@ const routes = [
   },
 
   // 4. QueryParams: GetByName
-  {
-    method: 'GET',
-    path: '/books/{name?}',
-    handler: () => {},
-  },
+  // {
+  //   method: 'GET',
+  //   path: '/books/{name?}',
+  //   handler: getByNameHandler,
+  // },
 
   // 5. QueryParams: GetByReading
   // {

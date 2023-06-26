@@ -71,12 +71,28 @@ const addBookHandler = (request, h) => {
 };
 
 // 2. getAllBook
-const getAllBooksHandler = () => ({
-  status: 'success',
-  data: {
-    books,
-  },
-});
+const getAllBooksHandler = (request, h) => {
+  const { name } = request.query;
+  if (name) {
+    // eslint-disable-next-line max-len
+    const filteredBooks = books.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+
+    return {
+      status: 'success',
+      data: {
+        books: filteredBooks,
+      },
+    };
+  // eslint-disable-next-line no-else-return
+  } else {
+    return {
+      status: 'success',
+      data: {
+        books,
+      },
+    };
+  }
+};
 
 // 3. getBookById
 const getBookByIdHandler = (request, h) => {
@@ -100,7 +116,19 @@ const getBookByIdHandler = (request, h) => {
   return response;
 };
 
-// 4. EditBookById
+// 4. QueryParams: GetByName
+// const getByNameHandler = (request, h) => {
+//   const { name = 'dicoding' } = request.params.name;
+//   const { lang } = request.query;
+//   if (name) {
+//     return `Search by name: ${name}`;
+//   }
+//   return 'All books';
+// };
+
+// 5. QueryParams: GetByReading
+// 6. QueryParams: GetByFinished
+// 7. EditBookById
 const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
   const {
@@ -163,7 +191,7 @@ const editBookByIdHandler = (request, h) => {
   return response;
 };
 
-// 4. EditBookById
+// 8. DeleteBookById
 const deleteBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
