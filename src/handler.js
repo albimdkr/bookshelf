@@ -60,7 +60,7 @@ const addBookHandler = (request, h) => {
   if (isSuccess) {
     const response = h.response({
       status: 'success',
-      message: 'Buku berhasil ditambahkan!',
+      message: 'Buku berhasil ditambahkan',
       data: {
         book: bookId,
       },
@@ -74,7 +74,7 @@ const addBookHandler = (request, h) => {
 const getAllBooksHandler = (request, h) => {
   const { name, reading, finished } = request.query;
 
-  const filteredBooks = books.filter((book) => {
+  const filterBook = books.filter((book) => {
     // Filter by Name Book
     if (name && !book.name.toLowerCase().includes(name.toLowerCase())) {
       return false;
@@ -104,7 +104,7 @@ const getAllBooksHandler = (request, h) => {
   return {
     status: 'success',
     data: {
-      books: filteredBooks,
+      books: filterBook,
     },
   };
 };
