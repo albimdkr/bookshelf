@@ -2,7 +2,11 @@
 // , getAllBooksHandler, getBookById, editBookById, deleteBookByIdHandler
 // eslint-disable-next-line no-unused-vars
 const {
-  addBookHandler, getAllBooksHandler, getBookByIdHandler, editBookByIdHandler,
+  addBookHandler,
+  getAllBooksHandler,
+  getBookByIdHandler,
+  editBookByIdHandler,
+  deleteBookByIdHandler,
 } = require('./handler');
 
 const routes = [
@@ -32,6 +36,13 @@ const routes = [
     method: 'PUT',
     path: '/books/{bookId}',
     handler: editBookByIdHandler,
+  },
+
+  // 5. deletedById
+  {
+    method: 'DELETE',
+    path: '/books/{bookId}',
+    handler: deleteBookByIdHandler,
   },
 ];
 module.exports = routes;
