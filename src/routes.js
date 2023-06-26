@@ -10,47 +10,47 @@ const {
 } = require('./handler');
 
 const routes = [
-  // 1. add a book
+  // 1. addBook
   {
     method: 'POST',
     path: '/books',
     handler: addBookHandler,
   },
 
-  // 2. get all book
+  // 2. getAllBook
   {
     method: 'GET',
     path: '/books',
     handler: getAllBooksHandler,
   },
 
-  // 3. QueryParamsGetByName
-  {
-    method: 'GET',
-    path: 'books/{name}',
-    handler: () => {},
-  },
-
-  // 4. QueryParamsGetByReading
-  {
-    method: 'GET',
-    path: 'books/{reading}',
-    handler: () => {},
-  },
-
-  // 5. QueryParamsGetByFinished
-  {
-    method: 'GET',
-    path: 'books/{finished}',
-    handler: () => {},
-  },
-
-  // 6. get book with spesifik id
+  // 3. getBookById
   {
     method: 'GET',
     path: '/books/{bookId}',
     handler: getBookByIdHandler,
   },
+
+  // 4. QueryParams: GetByName
+  {
+    method: 'GET',
+    path: '/books/{name?}',
+    handler: () => {},
+  },
+
+  // 5. QueryParams: GetByReading
+  // {
+  //   method: 'GET',
+  //   path: '/books/{reading?}',
+  //   handler: () => {},
+  // },
+
+  // 6. QueryParams: GetByFinished
+  // {
+  //   method: 'GET',
+  //   path: '/books/{finished?}',
+  //   handler: () => {},
+  // },
 
   // 7. EditById
   {
