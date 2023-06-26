@@ -24,21 +24,42 @@ const routes = [
     handler: getAllBooksHandler,
   },
 
-  // 3. get book with spesifik id
+  // 3. QueryParamsGetByName
+  {
+    method: 'GET',
+    path: 'books/{name}',
+    handler: () => {},
+  },
+
+  // 4. QueryParamsGetByReading
+  {
+    method: 'GET',
+    path: 'books/{reading}',
+    handler: () => {},
+  },
+
+  // 5. QueryParamsGetByFinished
+  {
+    method: 'GET',
+    path: 'books/{finished}',
+    handler: () => {},
+  },
+
+  // 6. get book with spesifik id
   {
     method: 'GET',
     path: '/books/{bookId}',
     handler: getBookByIdHandler,
   },
 
-  // 4. EditById
+  // 7. EditById
   {
     method: 'PUT',
     path: '/books/{bookId}',
     handler: editBookByIdHandler,
   },
 
-  // 5. deletedById
+  // 8. deletedById
   {
     method: 'DELETE',
     path: '/books/{bookId}',
