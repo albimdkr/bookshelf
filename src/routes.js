@@ -4,25 +4,32 @@
 const { addBookHandler, getAllBooksHandler, getBookByIdHandler } = require('./handler');
 
 const routes = [
-  // add a book
+  // 1. add a book
   {
     method: 'POST',
     path: '/books',
     handler: addBookHandler,
   },
 
-  // get all book
+  // 2. get all book
   {
     method: 'GET',
     path: '/books',
     handler: getAllBooksHandler,
   },
 
-  // get book with spesifik id
+  // 3. get book with spesifik id
   {
     method: 'GET',
-    path: '/books/{id}',
+    path: '/books/{bookId}',
     handler: getBookByIdHandler,
+  },
+
+  // 4. EditById
+  {
+    method: 'PUT',
+    path: '/books/{bookId}',
+    handler: () => {},
   },
 ];
 module.exports = routes;
