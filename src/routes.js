@@ -31,35 +31,14 @@ const routes = [
     handler: getBookByIdHandler,
   },
 
-  // 4. QueryParams: GetByName
-  // {
-  //   method: 'GET',
-  //   path: '/books/{name?}',
-  //   handler: getByNameHandler,
-  // },
-
-  // 5. QueryParams: GetByReading
-  // {
-  //   method: 'GET',
-  //   path: '/books/{reading?}',
-  //   handler: () => {},
-  // },
-
-  // 6. QueryParams: GetByFinished
-  // {
-  //   method: 'GET',
-  //   path: '/books/{finished?}',
-  //   handler: () => {},
-  // },
-
-  // 7. EditById
+  // 4. EditById
   {
     method: 'PUT',
     path: '/books/{bookId}',
     handler: editBookByIdHandler,
   },
 
-  // 8. deletedById
+  // 5. deletedById
   {
     method: 'DELETE',
     path: '/books/{bookId}',

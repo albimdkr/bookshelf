@@ -72,26 +72,41 @@ const addBookHandler = (request, h) => {
 
 // 2. getAllBook
 const getAllBooksHandler = (request, h) => {
-  const { name } = request.query;
-  if (name) {
-    // eslint-disable-next-line max-len
-    const filteredBooks = books.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+  const { name, reading, finished } = request.query;
 
-    return {
-      status: 'success',
-      data: {
-        books: filteredBooks,
-      },
-    };
-  // eslint-disable-next-line no-else-return
-  } else {
-    return {
-      status: 'success',
-      data: {
-        books,
-      },
-    };
-  }
+  const filteredBooks = books.filter((book) => {
+    // Filter by Name Book
+    if (name && !book.name.toLowerCase().includes(name.toLowerCase())) {
+      return false;
+    }
+
+    // Filter by reading
+    if (reading === '0' && book.reading) {
+      return false;
+    }
+
+    if (reading === '1' && !book.reading) {
+      return false;
+    }
+
+    // Filter by finished
+    if (finished === '0' && book.finished) {
+      return false;
+    }
+
+    if (finished === '1' && !book.finished) {
+      return false;
+    }
+
+    return true;
+  });
+
+  return {
+    status: 'success',
+    data: {
+      books: filteredBooks,
+    },
+  };
 };
 
 // 3. getBookById
@@ -116,19 +131,7 @@ const getBookByIdHandler = (request, h) => {
   return response;
 };
 
-// 4. QueryParams: GetByName
-// const getByNameHandler = (request, h) => {
-//   const { name = 'dicoding' } = request.params.name;
-//   const { lang } = request.query;
-//   if (name) {
-//     return `Search by name: ${name}`;
-//   }
-//   return 'All books';
-// };
-
-// 5. QueryParams: GetByReading
-// 6. QueryParams: GetByFinished
-// 7. EditBookById
+// 4. editById
 const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
   const {
@@ -191,7 +194,7 @@ const editBookByIdHandler = (request, h) => {
   return response;
 };
 
-// 8. DeleteBookById
+// 5. deleteBookById
 const deleteBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
 
