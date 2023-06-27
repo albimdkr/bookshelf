@@ -40,6 +40,7 @@ const addBookHandler = (request, h) => {
     return response;
   }
   const newBook = {
+    bookId,
     name,
     year,
     author,
@@ -47,9 +48,8 @@ const addBookHandler = (request, h) => {
     publisher,
     pageCount,
     readPage,
-    reading,
     finished,
-    bookId,
+    reading,
     insertedAt,
     updatedAt,
   };
@@ -72,11 +72,16 @@ const addBookHandler = (request, h) => {
 
 // 2. getAllBook
 const getAllBooksHandler = (request, h) => {
-  const { name, reading, finished } = request.query;
+  // const {
+  //   bookId,
+  //   name,
+  //   publisher,
+  // } = request.payload;
 
+  const { nameFilter, reading, finished } = request.query;
   const filterBook = books.filter((book) => {
     // Filter by Name Book
-    if (name && !book.name.toLowerCase().includes(name.toLowerCase())) {
+    if (nameFilter && !book.name.toLowerCase().includes(nameFilter.toLowerCase())) {
       return false;
     }
 
@@ -101,6 +106,7 @@ const getAllBooksHandler = (request, h) => {
     return true;
   });
 
+  // const showBook = nameFilter;
   return {
     status: 'success',
     data: {
@@ -118,7 +124,7 @@ const getBookByIdHandler = (request, h) => {
     return {
       status: 'success',
       data: {
-        book,
+        bookId,
       },
     };
   }
