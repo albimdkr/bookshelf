@@ -219,6 +219,8 @@ const deleteBookByIdHandler = (request, h) => {
     status: 'Fail',
     message: 'Buku gagal dihapus. Id tidak ditemukan',
   });
+  response.code(404);
+  return response;
 };
 module.exports = {
   addBookHandler,
