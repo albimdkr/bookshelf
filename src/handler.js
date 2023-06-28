@@ -74,65 +74,46 @@ const addBookHandler = (request, h) => {
 const getAllBooksHandler = (request, h) => {
   const { name, reading, finished } = request.query;
 
-  // Filter buku berdasarkan query parameters
   let filteredBooks = books;
 
   if (name !== undefined) {
-    filteredBooks = books.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
-  } else if (reading !== undefined) {
-    filteredBooks = books.filter((book) => book.reading === (reading === 1));
-  } else if (finished !== undefined) {
-    filteredBooks = books.filter((book) => book.finished === (finished === 1));
+    filteredBooks = filteredBooks.filter((book) => book
+      .name.toLowerCase().includes(name.toLowerCase()));
   }
 
-  // if (searchName) {
-  //   const lowercaseSearchName = searchName.toLowerCase();
-  //   // eslint-disable-next-line max-len
-  //   filteredBooks ->
-  //   filteredBooks.filter((book) => book.name.toLowerCase().includes(lowercaseSearchName));
-  // }
-
-  // if (reading) {
-  //   const isReading = reading === '1';
-  //   filteredBooks = filteredBooks.filter((book) => book.reading === isReading);
-  // }
-
-  // if (finished) {
-  //   const isFinished = finished === '1';
-  //   filteredBooks = filteredBooks.filter((book) => book.finished === isFinished);
-  // }
-
-  if (filteredBooks) {
-    const response = h.response({
-      status: 'success',
-      data: {
-        books: filteredBooks.map((book) => ({
-          id: book.id,
-          name: book.name,
-          publisher: book.publisher,
-        })),
-      },
-    }).code(200);
-    return response;
+  if (reading !== undefined) {
+    filteredBooks = filteredBooks.filter((book) => book.reading === !!Number(reading));
   }
+
+  if (finished !== undefined) {
+    filteredBooks = filteredBooks.filter((book) => book.finished === !!Number(finished));
+  }
+
+  const response = h.response({
+    status: 'success',
+    data: {
+      books: filteredBooks.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
+    },
+  });
+  response.code(200);
+
+  return response;
 };
 
 // 3. getBookById
 const getBookByIdHandler = (request, h) => {
-  const { id: bookId } = request.params;
+  const { id } = request.params;
+  const book = books.filter((b) => b.id === id)[0];
 
-  // eslint-disable-next-line no-shadow
-  const book = books.find((book) => book.id === bookId);
-  if (book) {
-    const { id, name, publisher } = book;
+  if (book !== undefined) {
     return {
       status: 'success',
       data: {
-        book: {
-          id,
-          name,
-          publisher,
-        },
+        book,
       },
     };
   }
@@ -142,6 +123,7 @@ const getBookByIdHandler = (request, h) => {
     message: 'Buku tidak ditemukan',
   });
   response.code(404);
+
   return response;
 };
 
