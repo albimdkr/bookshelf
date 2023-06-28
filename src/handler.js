@@ -96,27 +96,42 @@ const getAllBooksHandler = (request, h) => {
   const response = h.response({
     status: 'success',
     data: {
-      books: filteredBooks.map((book) => {
-        // eslint-disable-next-line no-shadow
-        const { id, name, publisher } = book;
-        return { id, name, publisher };
-      }),
+      // eslint-disable-next-line no-shadow
+      books: filteredBooks.map((book) => ({
+        id: book.id,
+        name: book.name,
+        publisher: book.publisher,
+      })),
     },
   });
-
   response.code(200);
-
   return response;
 };
 
-module.exports = {
-  getAllBooksHandler,
-};
-
 // 3. getBookById
+// const getBookByIdHandler = (request, h) => {
+//   const { bookId } = request.params;
+//   const book = books.filter((b) => b.id === bookId)[0];
+
+//   if (book !== undefined) {
+//     return {
+//       status: 'success',
+//       data: {
+//         book,
+//       },
+//     };
+//   }
+
+//   const response = h.response({
+//     status: 'fail',
+//     message: 'Buku tidak ditemukan',
+//   }).code(404);
+
+//   return response;
+// };
 const getBookByIdHandler = (request, h) => {
   const { id } = request.params;
-  const book = books.filter((b) => b.id === id)[0];
+  const book = books.find((b) => b.id === id);
 
   if (book !== undefined) {
     const { bookId, ...bookData } = book;
@@ -133,17 +148,16 @@ const getBookByIdHandler = (request, h) => {
   const response = h.response({
     status: 'fail',
     message: 'Buku tidak ditemukan',
-  });
-  response.code(404);
-
+  }).code(404);
   return response;
 };
 
 // 4. editById
 const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
+  const updatedAt = new Date().toISOString();
+  const index = books.findIndex((book) => book.bookId === bookId);
   const {
-    id,
     name,
     year,
     author,
@@ -153,8 +167,6 @@ const editBookByIdHandler = (request, h) => {
     readPage,
     reading,
   } = request.payload;
-  const updatedAt = new Date().toISOString();
-  const index = books.findIndex((book) => book.bookId === bookId);
 
   if (!name) {
     const response = h.response({
@@ -177,7 +189,6 @@ const editBookByIdHandler = (request, h) => {
   if (index !== -1) {
     books[index] = {
       ...books[index],
-      id,
       name,
       year,
       author,
