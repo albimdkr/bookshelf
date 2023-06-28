@@ -77,31 +77,40 @@ const getAllBooksHandler = (request, h) => {
   let filteredBooks = books;
 
   if (name !== undefined) {
-    filteredBooks = filteredBooks.filter((book) => book
-      .name.toLowerCase().includes(name.toLowerCase()));
+    // eslint-disable-next-line max-len
+    filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
   }
 
   if (reading !== undefined) {
-    filteredBooks = filteredBooks.filter((book) => book.reading === !!Number(reading));
+    filteredBooks = filteredBooks.filter(
+      (book) => book.reading === !!Number(reading),
+    );
   }
 
   if (finished !== undefined) {
-    filteredBooks = filteredBooks.filter((book) => book.finished === !!Number(finished));
+    filteredBooks = filteredBooks.filter(
+      (book) => book.finished === !!Number(finished),
+    );
   }
 
   const response = h.response({
     status: 'success',
     data: {
-      books: filteredBooks.map((book) => ({
-        id: book.id,
-        name: book.name,
-        publisher: book.publisher,
-      })),
+      books: filteredBooks.map((book) => {
+        // eslint-disable-next-line no-shadow
+        const { id, name, publisher } = book;
+        return { id, name, publisher };
+      }),
     },
   });
+
   response.code(200);
 
   return response;
+};
+
+module.exports = {
+  getAllBooksHandler,
 };
 
 // 3. getBookById
@@ -110,10 +119,13 @@ const getBookByIdHandler = (request, h) => {
   const book = books.filter((b) => b.id === id)[0];
 
   if (book !== undefined) {
+    const { bookId, ...bookData } = book;
+    const updatedBook = { id: bookId, ...bookData };
+
     return {
       status: 'success',
       data: {
-        book,
+        book: updatedBook,
       },
     };
   }
