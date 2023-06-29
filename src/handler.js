@@ -153,13 +153,14 @@ const getAllBooksHandler = (request, h) => {
 
 //   return response;
 // };
+// 3. getBookById
 const getBookByIdHandler = (request, h) => {
-  const { id } = request.params;
-  const book = books.find((b) => b.id === id);
+  const { bookId } = request.params;
+  const book = books.find((b) => b.bookId === bookId);
 
   if (book !== undefined) {
-    const { bookId, ...bookData } = book;
-    const updatedBook = { id: bookId, ...bookData };
+    const { idParams, ...bookData } = book;
+    const updatedBook = { id: idParams, ...bookData };
 
     const response = {
       status: 'success',
@@ -169,13 +170,6 @@ const getBookByIdHandler = (request, h) => {
     };
     return h.response(response).code(200);
   }
-  // return {
-  //   status: 'success',
-  //   data: {
-  //     book: updatedBook,
-  //   },
-  // };
-
   const response = h.response({
     status: 'fail',
     message: 'Buku tidak ditemukan',
@@ -187,7 +181,7 @@ const getBookByIdHandler = (request, h) => {
 const editBookByIdHandler = (request, h) => {
   const { bookId } = request.params;
   const updatedAt = new Date().toISOString();
-  const index = books.findIndex((book) => book.bookId === bookId);
+  const index = books.findIndex((b) => b.bookId === bookId);
   const {
     name,
     year,
@@ -248,9 +242,9 @@ const editBookByIdHandler = (request, h) => {
 
 // 5. deleteBookById
 const deleteBookByIdHandler = (request, h) => {
-  const { id } = request.params;
+  const { bookId } = request.params;
 
-  const index = books.findIndex((book) => book.id === id);
+  const index = books.findIndex((b) => b.bookId === bookId);
   if (index !== -1) {
     books.splice(index, 1);
     const response = h.response({
@@ -268,6 +262,7 @@ const deleteBookByIdHandler = (request, h) => {
   response.code(404);
   return response;
 };
+
 module.exports = {
   addBookHandler,
   getAllBooksHandler,
