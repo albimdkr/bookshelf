@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable consistent-return */
 /* eslint-disable no-unused-vars */
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -53,7 +54,6 @@ const addBookHandler = (request, h) => {
     insertedAt,
     updatedAt,
   };
-
   books.push(newBook);
 
   const isSuccess = books.filter((book) => book.bookId === bookId).length > 0;
@@ -73,28 +73,27 @@ const addBookHandler = (request, h) => {
 const getAllBooksHandler = (request, h) => {
   const { name, reading, finished } = request.query;
 
-  let filteredBooks = books;
-
-  if (name !== undefined) {
-    // eslint-disable-next-line max-len
-    filteredBooks = filteredBooks.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+  let searchBook = books;
+  // eslint-disable-next-line default-case
+  switch (true) {
+    case name !== undefined:
+      searchBook = searchBook.filter((book) => book.name.toLowerCase().includes(name.toLowerCase()));
+      break;
+    case reading !== undefined:
+      searchBook = searchBook.filter((book) => book.reading === !!Number(reading));
+      break;
+    case finished !== undefined:
+      searchBook = searchBook.filter((book) => book.finished === !!Number(finished));
+      break;
   }
 
-  if (reading !== undefined) {
-    filteredBooks = filteredBooks.filter((book) => book.reading === !!Number(reading));
-  }
-
-  if (finished !== undefined) {
-    filteredBooks = filteredBooks.filter((book) => book.finished === !!Number(finished));
-  }
-
-  if (filteredBooks) {
+  if (searchBook) {
     const { id } = books;
     const idParams = { bookId: id };
     const response = h.response({
       status: 'success',
       data: {
-        books: filteredBooks.map((book) => ({
+        books: searchBook.map((book) => ({
           id: idParams,
           name: book.name,
           publisher: book.publisher,
